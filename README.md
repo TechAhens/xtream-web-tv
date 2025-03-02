@@ -80,12 +80,12 @@ docker compose up -d
 The application now runs on http://localhost:4000
 
 ## ⚙️ Configuration
-| Env-Variable    | Explanation | Required | Default
-| -------- | ------- || -------- | ------- |
-| XTREAMAPIURL  | Xtreme Codes Provider URL    | Required | |
-| XTREAMUSER | Your Xtream Codes username    | Required | |
-| XTREAMPASSWORD    | Your Xtream Codes password    | Required  | |
-| CRON_UPDATE    | Update frequency for the channel database in cron format | Optional | 15 */12 * * * |
+| Env-Variable    | Explanation                                      | Required | Default         |
+|-----------------|--------------------------------------------------|----------|----------------|
+| XTREAMAPIURL    | Xtreme Codes Provider URL                        | Required |                |
+| XTREAMUSER      | Your Xtream Codes username                       | Required |                |
+| XTREAMPASSWORD  | Your Xtream Codes password                       | Required |                |
+| CRON_UPDATE     | Update frequency for the channel database in cron format | Optional | 15 */12 * * * |
 
 ## 🛠️ Technologies & Frameworks Used  
 | Category     | Framework |
