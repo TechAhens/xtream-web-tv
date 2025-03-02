@@ -12,7 +12,7 @@ Web application build with Node.js and Bootstrap for playing live streams of xtr
 
 ### Docker compose
 
-1. Create docker docker-compose.yml
+1. Create docker-compose.yml
 ```shsh
 touch docker-compose.yml
 ```
