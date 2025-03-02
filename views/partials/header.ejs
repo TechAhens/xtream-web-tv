@@ -1,0 +1,22 @@
+<div class="col-md mb-3">
+    <header class="d-flex flex-wrap justify-content-center border-bottom">
+        <a href="/" class="d-flex align-items-center text-decoration-none text-light mt-1 me-md-auto">
+            <i class="bi bi-tv fs-1 me-2"></i>
+            <div class="d-flex flex-column lh-1">
+                <span class="fw-bold font-monospace">Xtream</span>
+                <span class="text-muted font-monospace">Web TV</span>
+            </div>
+        </a>
+        <div class="d-flex hstack justify-content-center align-items-center gap-3 py-2">
+            <%= account.user_info.message %>
+            <div class="vr"></div>
+            <span class="bi bi-person">
+                <%= account.user_info.username %>
+            </span>
+            <!--<div class="vr"></div> 
+            <%= account.user_info.status %> -->
+            <div class="vr"></div>
+            <span class="bi bi-calendar me-2"> Expires <%= account.user_info.expires %></span>
+        </div>
+    </header>
+</div>

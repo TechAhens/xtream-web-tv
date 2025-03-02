@@ -1,0 +1,10 @@
+services:
+  xtream-web-tv:
+    image: xtream-web-tv
+    container_name: xtream-web-tv
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "4000:4000"
+    volumes:
+      - ~/xtream-web-tv:/app/data
