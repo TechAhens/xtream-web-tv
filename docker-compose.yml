@@ -7,4 +7,4 @@ services:
     ports:
       - "4000:4000"
     volumes:
-      - ~/xtream-web-tv:/app/data
+      - xtream-web-tv:/app/data
