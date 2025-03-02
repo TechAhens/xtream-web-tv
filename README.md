@@ -46,7 +46,7 @@ The application now runs on http://localhost:4000
 
 1. Clone the repository
 ```sh
-git clone https://git.kolstr.net/kolstr/xtream-web-tv.git
+git clone https://github.com/kolle86/xtream-web-tv.git
 ```
 
 2. Navigate into the project directory
