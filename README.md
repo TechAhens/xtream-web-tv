@@ -21,7 +21,7 @@ touch docker-compose.yml
 ```
 services:
   xtream-web-tv:
-    image: kolstr\xtream-web-tv
+    image: kolstr/xtream-web-tv
     container_name: xtream-web-tv
     restart: unless-stopped
     environment:
