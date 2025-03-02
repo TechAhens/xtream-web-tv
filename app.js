@@ -11,7 +11,10 @@ require('dotenv').config();
 const apiUrl = process.env.XTREAMAPIURL;
 const username = process.env.XTREAMUSER;
 const password = process.env.XTREAMPASSWORD;
-const cron_update = process.env.CRON_UPDATE;
+let cron_update = "15 */12 * * *";
+if(process.env.CRON_UPDATE != undefined){
+    cron_update = "15 */12 * * *"
+}
 const session = require('express-session');
 const { randomBytes } = require("node:crypto");
 
