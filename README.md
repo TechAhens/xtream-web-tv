@@ -32,7 +32,7 @@ services:
     ports:
       - "4000:4000"
     volumes:
-      - ~/xtream-web-tv:/app/data
+      - xtream-web-tv:/app/data
 ```
 For an explanation of the environment variables see chapter "Configuration".
 
