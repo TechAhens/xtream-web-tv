@@ -10,6 +10,40 @@ Web application build with Node.js and Bootstrap for playing live streams of xtr
 
 ## 🚀 Installation 
 
+### Docker compose
+
+1. Create docker docker-compose.yml
+```shsh
+touch docker-compose.yml
+```
+
+2. Insert into docker-compose.yml:
+```
+services:
+  xtream-web-tv:
+    image: kolstr\xtream-web-tv
+    container_name: xtream-web-tv
+    restart: unless-stopped
+    environment:
+      - XTREAMAPIURL=http://provider.net:8080
+      - XTREAMUSER=username
+      - XTREAMPASSWORD=password
+      - CRON_UPDATE="15 */12 * * *"
+    ports:
+      - "4000:4000"
+    volumes:
+      - ~/xtream-web-tv:/app/data
+```
+For an explanation of the environment variables see chapter "Configuration".
+
+3. Start container
+```sh
+docker compose up -d
+```
+The application now runs on http://localhost:4000
+
+### Build image manually from repository
+
 1. Clone the repository
 ```sh
 git clone https://git.kolstr.net/kolstr/xtream-web-tv.git
@@ -46,12 +80,12 @@ docker compose up -d
 The application now runs on http://localhost:4000
 
 ## ⚙️ Configuration
-| Env-Variable    | Explanation |
-| -------- | ------- |
-| XTREAMAPIURL  | Xtreme Codes Provider URL    |
-| XTREAMUSER | Your Xtream Codes username    |
-| XTREAMPASSWORD    | Your Xtream Codes password    |
-| CRON_UPDATE    | Update frequency for the channel database in cron format    |
+| Env-Variable    | Explanation | Required | Default
+| -------- | ------- || -------- | ------- |
+| XTREAMAPIURL  | Xtreme Codes Provider URL    | Required | |
+| XTREAMUSER | Your Xtream Codes username    | Required | |
+| XTREAMPASSWORD    | Your Xtream Codes password    | Required  | |
+| CRON_UPDATE    | Update frequency for the channel database in cron format | Optional | 15 */12 * * * |
 
 ## 🛠️ Technologies & Frameworks Used  
 | Category     | Framework |
