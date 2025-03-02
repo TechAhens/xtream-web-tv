@@ -2,7 +2,7 @@ name: Docker Workflow
  
 on:
   release:
-    types: [published]
+    types: [created]
       
 jobs:
   build:
