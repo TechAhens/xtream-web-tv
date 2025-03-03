@@ -41,18 +41,22 @@ function checkAndUpdateTables() {
 }
 
 function updateTables() {
-    console.log("Updating database...");
-    db.serialize(() => {
-        db.run('DELETE FROM channels');
-        db.run('DELETE FROM categories', (err) => {
-            if (err) {
-                console.error('Fehler beim Leeren der Tabellen:', err.message);
-                return;
-            }
-            console.log('Truncated tables');
+    return new Promise((resolve, reject) => {
+        console.log("Updating database...");
+
+        db.serialize(() => {
+            db.run('DELETE FROM channels');
+            db.run('DELETE FROM categories', (err) => {
+                if (err) {
+                    console.error('Fehler beim Leeren der Tabellen:', err.message);
+                    reject(err);
+                    return;
+                }
+                console.log('Truncated tables...');
+                getStreams().then(resolve).catch(reject); // Warte auf getStreams()
+            });
         });
     });
-    getStreams();
 }
 
 // Account-Information

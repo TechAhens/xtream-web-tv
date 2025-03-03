@@ -3,6 +3,8 @@ const categories = document.getElementById("categories");
 const player = document.getElementById("player");
 const categoriesClasses = ["col-md-2", "col-md-3", "col-md-4"];
 const playerClasses = ["col-md-8", "col-md-7", "col-md-6"];
+const liveToast = document.getElementById('liveToast')
+const toast = bootstrap.Toast.getOrCreateInstance(liveToast)
 window.addEventListener("DOMContentLoaded", loadClassesFromStorage);
 
 // Event Listener für das Klicken auf einen Kanal
@@ -182,3 +184,29 @@ function fetchEPGData(epgUrl) {
 
 }
 
+function updateChannelsManually(){
+    document.getElementById("updateMenuItem").classList.add("disabled")
+    newToast("<div class='spinner-border text-muted d-block mb-1' role='status'>\
+            <span class='visually-hidden'>Loading...</span>\
+            </div>\
+            Updating stream-database in the background.\
+            <br>Page will reload when update is finished.");
+    fetch('/update')
+    .then(response => response.json()) // JSON-Antwort abrufen
+    .then(data => {
+        if (data.success) {
+            console.log("Successfully updated database...");
+            location.reload(); // Seite neu laden
+        } else {
+            console.error("Error updating database: ", data.error);
+            newToast("Error updating database.");
+        }
+    })
+    .catch(error => newToast('Error updating database: ' + error));
+
+}
+
+function newToast(message) {
+    document.getElementById("toastMessage").innerHTML = (message);
+    toast.show();
+}

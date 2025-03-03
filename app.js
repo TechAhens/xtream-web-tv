@@ -43,10 +43,13 @@ cron.schedule(cron_update, () => {
     dbHandler.updateTables();
 });
 
-// Route zum manuellen Update
-app.get('/update', (req, res) => {
-    dbHandler.updateTables();
-    res.send("Database-Update is running...");
+app.get('/update', async (req, res) => {
+    try {
+        await dbHandler.updateTables();
+        res.json({ success: true, message: "Database-Update completed." });
+    } catch (error) {
+        res.status(500).json({ success: false, error: "Error updating database", details: error.message });
+    }
 });
 
 // Startseite mit Account- und Stream-Informationen
