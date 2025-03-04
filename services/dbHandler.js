@@ -124,7 +124,7 @@ async function getCategoriesWithStreams() {
         db.all('SELECT categories.*, categories_visibility.hidden FROM categories LEFT JOIN categories_visibility ON categories.category_id = categories_visibility.category_id ORDER BY id ASC', async (err, categories) => {
             if (err) return reject(err);
             try {
-                console.log(categories)
+                //console.log(categories)
                 const categoryPromises = categories.map(category => {
                     return new Promise((resolve, reject) => {
                         db.all('SELECT * FROM channels WHERE category_id = ? ORDER BY num ASC', [category.category_id], (err, channels) => {
