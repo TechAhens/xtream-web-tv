@@ -27,11 +27,17 @@
                 <button type="button" class="fs-4 btn btn-secondary-outline dropdown-toggle bi bi-gear" data-bs-toggle="dropdown" aria-expanded="false">
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
-                    <li><h6 class="dropdown-header bi bi-database"> Database</h6></li>
-                    <li><a id="updateMenuItem" class="dropdown-item" onclick="updateChannelsManually()" type="button">Update channels</a></li>
+                    <li><h6 class="dropdown-header bibi bi-list-stars"> Bouquets</h6></li>
+                    <li><a id="updateMenuItem" class="dropdown-item bi bi-arrow-clockwise" onclick="updateChannelsManually()" type="button"> Update now</a></li>
+                    <li>  
+                        <span class="dropdown-item no-close" >
+                            <input checked type="checkbox" class="form-check-input" id="piconsCheck" onchange="togglePicons();">
+                            <label class="form-check-label" for="piconsCheck">Show Picons</label>
+                        </span>
+                    </li>
                     <li><hr class="dropdown-divider"></li>
                     <li><h6 title="Expires <%= account.user_info.expires %>" class="dropdown-header bi bi-person"> <%= account.user_info.username %></h6></li>
-                    <li><a class="dropdown-item" href="/logout" type="button">Logout</a></li>
+                    <li><a class="dropdown-item bi bi-box-arrow-left" href="/logout" type="button"> Logout</a></li>
                 </ul>
               </div>
         </div>

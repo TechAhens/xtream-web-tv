@@ -10,7 +10,6 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    padding: 1px;
 }
 
 .accordion-button:not(.collapsed) {

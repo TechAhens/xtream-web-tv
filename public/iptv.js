@@ -7,6 +7,12 @@ const liveToast = document.getElementById('liveToast')
 const toast = bootstrap.Toast.getOrCreateInstance(liveToast)
 window.addEventListener("DOMContentLoaded", loadClassesFromStorage);
 
+document.querySelectorAll('.dropdown-item.no-close').forEach(item => {
+    item.addEventListener('click', function (event) {
+        event.stopPropagation(); // Verhindert das Schließen des Dropdowns
+    });
+});
+
 // Event Listener für das Klicken auf einen Kanal
 document.querySelectorAll('.channel-item').forEach(function (item) {
     item.addEventListener('click', function () {
@@ -84,6 +90,13 @@ function toggleAllCollapses() {
     document.querySelectorAll('.collapse').forEach(collapse => {
         let bsCollapse = new bootstrap.Collapse(collapse, { toggle: false });
         collapse.classList.contains('show') ? bsCollapse.hide() : bsCollapse.show();
+    });
+}
+
+function togglePicons() {
+    document.querySelectorAll('.picon').forEach(picon => {
+        picon.classList.toggle("d-none");
+        picon.classList.toggle("d-block");
     });
 }
 
