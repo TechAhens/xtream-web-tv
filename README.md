@@ -6,7 +6,7 @@ Web application build with Node.js and Bootstrap for playing live streams of xtr
   This application does not provide any source of streams.
 - Only live tv is supported, no movies or series content.
 
-![Projekt Screenshot](screenshot.png?)
+![Projekt Screenshot](screenshot.png)
 
 ## 🚀 Installation 
 
