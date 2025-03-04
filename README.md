@@ -1,10 +1,13 @@
 # 📺 Xtream Web TV
 
-Web application build with Node.js and Bootstrap for playing live streams of xtream codes playlist.
-- The project's aim is to provide a simple interface for the bouquets and channels to let you qickly find and play a channel.
-- An xtream code account is required.
-  This application does not provide any source of streams.
-- Only live tv is supported, no movies or series content.
+Web application built with Node.js and Bootstrap for streaming live channels from an Xtream Codes playlist.
+
+- The goal of this project is to provide a simple and intuitive interface for browsing bouquets and channels, allowing you to quickly find and play your desired channel.
+- An Xtream Codes account is required. This application does not provide any streaming sources.
+- Only live TV is supported—movies and series are not included.
+- The app is fully responsive and works seamlessly on both desktop and mobile devices.
+- Users can customize their experience by choosing which bouquets to display and enabling or disabling Picons. An electronic program guide (EPG) is also available.
+- Note: Due to browser codec limitations and potential HTTP/HTTPS conflicts, some streams may not be playable.
 
 ![Projekt Screenshot](screenshot.png)
 
