@@ -6,6 +6,7 @@ const playerClasses = ["col-md-8", "col-md-7", "col-md-6"];
 const liveToast = document.getElementById('liveToast')
 const toast = bootstrap.Toast.getOrCreateInstance(liveToast)
 window.addEventListener("DOMContentLoaded", loadClassesFromStorage);
+window.addEventListener("DOMContentLoaded", loadSettingsFromStorage);
 
 document.querySelectorAll('.dropdown-item.no-close').forEach(item => {
     item.addEventListener('click', function (event) {
@@ -36,7 +37,7 @@ window.onload = function () {
 };
 
 function searchChannels(search) {
-    let searchTerms = search.toLowerCase().trim().split(/\s+/); 
+    let searchTerms = search.toLowerCase().trim().split(/\s+/);
     document.querySelectorAll('.channel-item').forEach(item => {
         channelText = item.textContent.toLowerCase().trim();
         matches = searchTerms.every(term => channelText.includes(term));
@@ -98,14 +99,22 @@ function togglePicons() {
         picon.classList.toggle("d-none");
         picon.classList.toggle("d-block");
     });
+    document.querySelectorAll('.channel-item').forEach(channel_item => {
+        channel_item.classList.toggle("py-1");
+        channel_item.classList.toggle("py-0");
+    });
+
+
+    if (document.getElementById('piconsCheck').checked) {
+        showPicons = "1";
+    } else {
+        showPicons = "0";
+    }
+    localStorage.setItem('showPicons', showPicons);
 }
 
 function toggleSidebar() {
     if (categories && player) {
-        /*categories.classList.toggle("col-md-3");
-        categories.classList.toggle("col-md-4");
-        player.classList.toggle("col-md-7");
-        player.classList.toggle("col-md-6");*/
         let currentCategoriesClass = categories.classList[0];
         let currentPlayerClass = player.classList[0];
         let currentCategoriesIndex = categoriesClasses.indexOf(currentCategoriesClass);
@@ -134,6 +143,14 @@ function loadClassesFromStorage() {
     player.style.transition = ""
 }
 
+function loadSettingsFromStorage() {
+    let showPicons = localStorage.getItem('showPicons');
+    if (showPicons != null && showPicons == 0) {
+        togglePicons();
+        document.getElementById('piconsCheck').checked = false;
+    }
+}
+
 function decodeBase64(str) {
     //return atob(str);
     return decodeURIComponent(escape(window.atob(str)));
@@ -159,10 +176,10 @@ function populateEPGList(epgData) {
         `<strong>${formatTime(program.start)} - ${formatTime(program.end)}</strong><br>
         <a tabindex='0' role='button' class='epg_title text-decoration-none text-muted' data-bs-placement='left' data-bs-toggle='popover' data-bs-trigger='focus' data-bs-title='Info' data-bs-content='${decodeBase64(program.description)}'>${decodeBase64(program.title)}</a>`;
         */
-       listItem.innerHTML = `<strong>${formatTime(program.start)} - ${formatTime(program.end)}</strong><br>`
-        if(program.description != ''){
+        listItem.innerHTML = `<strong>${formatTime(program.start)} - ${formatTime(program.end)}</strong><br>`
+        if (program.description != '') {
             listItem.innerHTML += `<details class='text-muted'><summary>${decodeBase64(program.title)}</summary><p>${decodeBase64(program.description)}</p></details>`;
-        }else{
+        } else {
             listItem.innerHTML += `<div class='text-muted'>${decodeBase64(program.title)}</div>`;
         }
         if (program == epgData.epg_listings[0]) {
@@ -197,7 +214,7 @@ function fetchEPGData(epgUrl) {
 
 }
 
-function updateChannelsManually(){
+function updateChannelsManually() {
     document.getElementById("updateMenuItem").classList.add("disabled")
     newToast("<div class='spinner-border text-muted d-block mb-1' role='status'>\
             <span class='visually-hidden'>Loading...</span>\
@@ -205,17 +222,17 @@ function updateChannelsManually(){
             Updating stream-database in the background.\
             <br>Page will reload when update is finished.");
     fetch('/update')
-    .then(response => response.json()) // JSON-Antwort abrufen
-    .then(data => {
-        if (data.success) {
-            console.log("Successfully updated database...");
-            location.reload(); // Seite neu laden
-        } else {
-            console.error("Error updating database: ", data.error);
-            newToast("Error updating database.");
-        }
-    })
-    .catch(error => newToast('Error updating database: ' + error));
+        .then(response => response.json()) // JSON-Antwort abrufen
+        .then(data => {
+            if (data.success) {
+                console.log("Successfully updated database...");
+                location.reload(); // Seite neu laden
+            } else {
+                console.error("Error updating database: ", data.error);
+                newToast("Error updating database.");
+            }
+        })
+        .catch(error => newToast('Error updating database: ' + error));
 
 }
 
