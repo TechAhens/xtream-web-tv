@@ -83,6 +83,17 @@ app.post('/login', async (req, res) => {
       
 });
 
+app.post('/bouquets', async (req, res) => {
+    console.log(req.body);
+    try {
+        await dbHandler.updateCategoriesVisibility(req.body.bouquetsHidden);
+        res.redirect("/");
+    } catch (error) {
+        res.send(error );
+    }
+      
+});
+
 app.get('/logout', (req, res) => {
     req.session.destroy((err) => {
         if (err) {

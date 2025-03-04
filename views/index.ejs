@@ -34,33 +34,36 @@
                 </div>
                 <div class="overflow-y-scroll overflow-x-hidden " id="accordion_overflow">
                     <% streams.forEach(function(category) { %>
-                        <div class="accordion me-1" id="<%= category.id %>">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapse<%= category.id %>" aria-expanded="true"
-                                        aria-controls="collapse<%= category.id %>">
-                                        <%= category.name %>
-                                    </button>
-                                </h2>
-                                <div id="collapse<%= category.id %>" class="accordion-collapse collapse"
-                                    data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        <ul class="list-group list-group-flush">
-                                            <% category.streams.forEach(function(channel) { %>
-                                                <button class="list-group-item list-group-item-action channel-item py-0 px-0"
-                                                    channel-name="<%= channel.name %>"
-                                                    data-url="<%= apiUrl %>/live/<%= username %>/<%= password %>/<%= channel.stream_id %>.m3u8"
-                                                    epg-url="<%= apiUrl %>/player_api.php?username=<%= username %>&password=<%= password %>&action=get_short_epg&stream_id=<%= channel.stream_id %>">
-                                                    <img loading="lazy" class="picon" src="<%= channel.icon %>">
-                                                    <%= channel.name %>
-                                                </button>
+                        <% if (!category.hidden ){ %>
+
+                            <div class="accordion me-1" id="<%= category.id %>">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapse<%= category.id %>" aria-expanded="true"
+                                            aria-controls="collapse<%= category.id %>">
+                                            <%= category.name %>
+                                        </button>
+                                    </h2>
+                                    <div id="collapse<%= category.id %>" class="accordion-collapse collapse"
+                                        data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            <ul class="list-group list-group-flush">
+                                                <% category.streams.forEach(function(channel) { %>
+                                                    <button class="list-group-item list-group-item-action channel-item py-0 px-0"
+                                                        channel-name="<%= channel.name %>"
+                                                        data-url="<%= apiUrl %>/live/<%= username %>/<%= password %>/<%= channel.stream_id %>.m3u8"
+                                                        epg-url="<%= apiUrl %>/player_api.php?username=<%= username %>&password=<%= password %>&action=get_short_epg&stream_id=<%= channel.stream_id %>">
+                                                        <img loading="lazy" class="picon" src="<%= channel.icon %>">
+                                                        <%= channel.name %>
+                                                    </button>
                                                 <% }) %>
-                                        </ul>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        <%}%>
                     <% }) %>
                 </div>
             </div>
@@ -98,6 +101,42 @@
               <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
           </div>
+      </div>
+
+      <div class="modal fade" id="bouquetsModal" tabindex="-1" aria-labelledby="bouquetsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="bouquetsModalLabel">Select bouquets to show/hide</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="/bouquets">
+                <div class="modal-body">
+                    <ul class="list-group">
+                        <% streams.forEach(function(category) { %>
+                            <% checked = "checked" %>
+                            <% checkedHidden = "" %>
+                            <% if (category.hidden ){ %>
+                                <% checked = ""; %>
+                                <% checkedHidden = "checked" %>
+                            <%}%>
+                            <li class="list-group-item">
+                                <input class="form-check-input me-1" <%= checked %> type="checkbox" value="<%= category.category_id %>" id="bouquet_<%= category.category_id %>"\
+                                onchange="document.getElementById('bouquet_hidden_<%= category.category_id %>').checked = !this.checked">
+                                <input type="checkbox" hidden <%= checkedHidden %> name="bouquetsHidden[]" value="<%= category.category_id %>" id="bouquet_hidden_<%= category.category_id %>">
+
+                                <label class="form-check-label" for="bouquet_<%= category.category_id %>"><%= category.name %></label>
+                            </li>
+                        <% }) %>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+          </div>
+        </div>
       </div>
     <script src="iptv.js"></script>
 </body>

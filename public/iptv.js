@@ -4,7 +4,9 @@ const player = document.getElementById("player");
 const categoriesClasses = ["col-md-2", "col-md-3", "col-md-4"];
 const playerClasses = ["col-md-8", "col-md-7", "col-md-6"];
 const liveToast = document.getElementById('liveToast')
-const toast = bootstrap.Toast.getOrCreateInstance(liveToast)
+const toast = bootstrap.Toast.getOrCreateInstance(liveToast);
+const bouquetsModal = new bootstrap.Modal(document.getElementById('bouquetsModal'), {});
+
 window.addEventListener("DOMContentLoaded", loadClassesFromStorage);
 window.addEventListener("DOMContentLoaded", loadSettingsFromStorage);
 

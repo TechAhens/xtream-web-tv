@@ -24,6 +24,12 @@ db.serialize(() => {
         num INTEGER,
         FOREIGN KEY (category_id) REFERENCES categories(category_id) ON DELETE CASCADE
     )`);
+
+    db.run(`CREATE TABLE IF NOT EXISTS categories_visibility (
+        category_id INTEGER PRIMARY KEY,
+        hidden INTEGER,
+        FOREIGN KEY (category_id) REFERENCES categories(category_id) 
+    )`);
     checkAndUpdateTables();
 });
 
@@ -115,9 +121,10 @@ const getStreams = async () => {
 // Kategorien mit Streams abrufen
 async function getCategoriesWithStreams() {
     return new Promise((resolve, reject) => {
-        db.all('SELECT * FROM categories ORDER BY id ASC', async (err, categories) => {
+        db.all('SELECT categories.*, categories_visibility.hidden FROM categories LEFT JOIN categories_visibility ON categories.category_id = categories_visibility.category_id ORDER BY id ASC', async (err, categories) => {
             if (err) return reject(err);
             try {
+                console.log(categories)
                 const categoryPromises = categories.map(category => {
                     return new Promise((resolve, reject) => {
                         db.all('SELECT * FROM channels WHERE category_id = ? ORDER BY num ASC', [category.category_id], (err, channels) => {
@@ -136,10 +143,40 @@ async function getCategoriesWithStreams() {
     });
 }
 
+async function updateCategoriesVisibility(bouquetsHidden) {
+    return new Promise((resolve, reject) => {
+        db.serialize(() => {
+            db.run("DELETE FROM categories_visibility", (err) => {
+                if (err) {
+                    console.error('Error clearing table:', err.message);
+                    return reject(err);
+                }
+            });
+
+            const stmt = db.prepare("INSERT INTO categories_visibility (category_id, hidden) VALUES (?, 1)");
+            bouquetsHidden.forEach(categoryId => {
+                stmt.run(categoryId, (err) => {
+                    if (err) {
+                        console.error(`Error inserting category_id ${categoryId}:`, err.message);
+                    }
+                });
+            });
+            stmt.finalize((err) => {
+                if (err) {
+                    console.error('Error finalizing statement:', err.message);
+                    return reject(err);
+                }
+                resolve();
+            });
+        });
+    });
+}
+
 module.exports = {
     getAccount,
     getStreams,
     getStreamsByCategory,
     getCategoriesWithStreams,
-    updateTables
+    updateTables,
+    updateCategoriesVisibility    
 };
