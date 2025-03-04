@@ -7,6 +7,7 @@ Web application built with Node.js and Bootstrap for streaming live channels fro
 - Only live TV is supported—movies and series are not included.
 - The app is fully responsive and works seamlessly on both desktop and mobile devices.
 - Users can customize their experience by choosing which bouquets to display and enabling or disabling Picons. An electronic program guide (EPG) is also available.
+- The project uses hls.js as the player, which supports Picture-in-Picture (PiP) mode for an enhanced viewing experience.
 - Note: Due to browser codec limitations and potential HTTP/HTTPS conflicts, some streams may not be playable.
 
 ![Projekt Screenshot](screenshot.png)
