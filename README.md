@@ -110,7 +110,7 @@ The application now runs on http://localhost:4000
 | XTREAMPASSWORD  | Your Xtream Codes password                       | Required |                |
 | CRON_UPDATE     | Update frequency for the channel database in cron format | Optional | 15 */12 * * * |
 
-## 🛠️ Technologies & Frameworks Used  
+## 🛠️ Technologie Stack
 | Category     | Framework |
 |-------------|------------|
 | Frontend    | ![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white) ![hls.js](https://img.shields.io/badge/hls.js-F37820?style=for-the-badge&logo=hls.js&logoColor=white) |
