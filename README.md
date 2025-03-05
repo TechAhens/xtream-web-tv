@@ -3,32 +3,17 @@
 **📡 Live TV Streaming Web App**  
 Web application built with Node.js and Bootstrap for streaming live channels from an Xtream Codes playlist.  
 
-**🎯 Project Goal**  
-The goal of this project is to provide a simple and intuitive interface for browsing bouquets and channels, allowing you to quickly find and play your desired channel.  
-
-**🔑 Requirements**  
-An Xtream Codes account is required. This application does not provide any streaming sources.  
-
-**📺 Supported Content**  
-Only live TV is supported—movies and series are not included.  
-
-**📱 Responsive Design**  
-The app is fully responsive and works seamlessly on both desktop and mobile devices.  
-
-**⚙️ Customization Options**  
-Users can customize their experience by:  
-- Selecting which bouquets to display  
-- Enabling or disabling Picons  
-- Accessing an integrated electronic program guide (EPG)  
-
-**▶️ Player Features**  
-The project uses **hls.js** as the player, which supports **Picture-in-Picture (PiP)** mode for an enhanced viewing experience.  
-
-**⚠️ Warning**  
-Due to browser codec limitations and potential HTTP/HTTPS conflicts, some streams may not be playable.  
-
-**🖼️ Screenshot**
-
+- **🎯 Project Goal** - The goal of this project is to provide a simple and intuitive interface for browsing bouquets and channels, allowing you to quickly find and play your desired channel.  
+- **🔑 Requirements** - An Xtream Codes account is required. This application does not provide any streaming sources.  
+- **📺 Supported Content** - Only live TV is supported—movies and series are not included.  
+- **📱 Responsive Design** - The app is fully responsive and works seamlessly on both desktop and mobile devices.  
+- **⚙️ Customization Options** - Users can customize their experience by:  
+  - Selecting which bouquets to display  
+  - Enabling or disabling Picons  
+- **🗓️ Electronic Program Guide (EPG)** - An integrated electronic program guide (EPG) is available, allowing users to see upcoming programs and schedules.  
+- **▶️ Player Features** - The project uses **hls.js** as the player, which supports **Picture-in-Picture (PiP)** mode for an enhanced viewing experience.  
+- **ℹ️ Note** - Due to browser codec limitations and potential HTTP/HTTPS conflicts, some streams may not be playable.
+  
 ![Projekt Screenshot](screenshot.png)
 
 ## 🚀 Installation 
