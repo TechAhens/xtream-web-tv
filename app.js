@@ -4,6 +4,7 @@ const port = 4000;
 const path = require('path');
 const axios = require('axios');
 const cron = require('node-cron');
+const packageJson = require('./package.json');
 const cors = require('cors');
 var bodyParser = require('body-parser')
 const dbHandler = require('./services/dbHandler'); // Import des neuen Moduls
@@ -12,7 +13,7 @@ const apiUrl = process.env.XTREAMAPIURL;
 const username = process.env.XTREAMUSER;
 const password = process.env.XTREAMPASSWORD;
 let cron_update = "15 */12 * * *";
-if(process.env.CRON_UPDATE != undefined){
+if (process.env.CRON_UPDATE != undefined) {
     cron_update = "15 */12 * * *"
 }
 const session = require('express-session');
@@ -35,7 +36,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     rolling: true,
-    cookie: { maxAge: 7*24*60*60*1000 }
+    cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 }
 }));
 
 // Cron-Job für Updates
@@ -52,6 +53,16 @@ app.get('/update', async (req, res) => {
     }
 });
 
+async function getLatestGitHubVersion() {
+    try {
+        const response = await axios.get(`https://api.github.com/repos/kolle86/xtream-web-tv/releases/latest`);
+        return response.data.tag_name.replace(/^v/, '');
+    } catch (error) {
+        console.error('Fehler beim Abrufen der GitHub-Version:', error.message);
+        return null;
+    }
+}
+
 // Startseite mit Account- und Stream-Informationen
 app.get('/', async (req, res) => {
     const isLoggedIn = req.session.isLoggedIn;
@@ -60,27 +71,32 @@ app.get('/', async (req, res) => {
             const account = await dbHandler.getAccount();
             expdate = new Date(account.user_info.exp_date * 1000);
             account.user_info.expires = expdate.toLocaleDateString("de-DE", { month: "2-digit", day: "2-digit", year: "numeric" });
-            
+
+            const isUpToDate = packageJson.version === await getLatestGitHubVersion();
+            const version = ({
+                appVersion: packageJson.version,
+                isUpToDate,
+            });
             const streams = await dbHandler.getCategoriesWithStreams();
-            res.render('index', { streams, apiUrl, username, password, account });
+            res.render('index', { streams, apiUrl, username, password, account, version });
         } catch (error) {
             console.error("Error retrieving data:", error);
             res.status(500).send("Error retrieving data.");
         }
-    }else{
+    } else {
         res.render('login');
     }
 });
 
 app.post('/login', async (req, res) => {
-    if(req.body.password == password && req.body.username == username){
-      req.session.isLoggedIn = true;
-      res.redirect("/"); 
-    }else {
-      var login_error = true;
-      res.render('login', {login_error});
+    if (req.body.password == password && req.body.username == username) {
+        req.session.isLoggedIn = true;
+        res.redirect("/");
+    } else {
+        var login_error = true;
+        res.render('login', { login_error });
     }
-      
+
 });
 
 app.post('/bouquets', async (req, res) => {
@@ -89,9 +105,9 @@ app.post('/bouquets', async (req, res) => {
         await dbHandler.updateCategoriesVisibility(req.body.bouquetsHidden);
         res.redirect("/");
     } catch (error) {
-        res.send(error );
+        res.send(error);
     }
-      
+
 });
 
 app.get('/logout', (req, res) => {
