@@ -221,7 +221,7 @@ function updateChannelsManually() {
     newToast("<div class='spinner-border text-muted d-block mb-1' role='status'>\
             <span class='visually-hidden'>Loading...</span>\
             </div>\
-            Updating stream-database in the background.\
+            Updating bouquets in the background.\
             <br>Page will reload when update is finished.");
     fetch('/update')
         .then(response => response.json()) // JSON-Antwort abrufen
