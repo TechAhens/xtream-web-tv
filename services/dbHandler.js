@@ -33,6 +33,9 @@ db.serialize(() => {
     checkAndUpdateTables();
 });
 
+/**
+ * Checks if the categories table is empty and updates tables if necessary.
+ */
 function checkAndUpdateTables() {
     db.get('SELECT COUNT(*) AS count FROM categories', (err, row) => {
         if (err) {
@@ -46,6 +49,10 @@ function checkAndUpdateTables() {
     });
 }
 
+/**
+ * Updates the database tables by clearing existing data and fetching new streams.
+ * @returns {Promise<void>} A promise that resolves when the tables are updated.
+ */
 function updateTables() {
     return new Promise((resolve, reject) => {
         console.log("Updating database...");
@@ -65,18 +72,30 @@ function updateTables() {
     });
 }
 
-// Account-Information
+/**
+ * Fetches account information from the API.
+ * @returns {Promise<Object>} A promise that resolves to the account data.
+ */
 const getAccount = async () => {
     const account = await axios.get(`${apiUrl}/player_api.php?username=${username}&password=${password}`);
     return account.data;
 };
 
 // Streams by categorie
+/**
+ * Fetches streams for a specific category from the API.
+ * @param {number} category_id - The ID of the category to fetch streams for.
+ * @returns {Promise<Array>} A promise that resolves to the streams data.
+ */
 const getStreamsByCategory = async (category_id) => {
     const streams = await axios.get(`${apiUrl}/player_api.php?username=${username}&password=${password}&action=get_live_streams&category_id=${category_id}`);
     return streams.data;
 };
 
+/**
+ * Fetches all categories and their streams from the API and updates the database.
+ * @returns {Promise<Array>} A promise that resolves to the categories data.
+ */
 const getStreams = async () => {
     try {
         const categoriesResponse = await axios.get(`${apiUrl}/player_api.php?username=${username}&password=${password}&action=get_live_categories`);
@@ -118,7 +137,10 @@ const getStreams = async () => {
     }
 };
 
-// Kategorien mit Streams abrufen
+/**
+ * Retrieves categories with their associated streams from the database.
+ * @returns {Promise<Array>} A promise that resolves to the categories with streams.
+ */
 async function getCategoriesWithStreams() {
     return new Promise((resolve, reject) => {
         db.all('SELECT categories.*, categories_visibility.hidden FROM categories LEFT JOIN categories_visibility ON categories.category_id = categories_visibility.category_id ORDER BY id ASC', async (err, categories) => {
@@ -143,6 +165,11 @@ async function getCategoriesWithStreams() {
     });
 }
 
+/**
+ * Updates the visibility of categories in the database.
+ * @param {Array<number>} bouquetsHidden - An array of category IDs to hide.
+ * @returns {Promise<void>} A promise that resolves when the visibility is updated.
+ */
 async function updateCategoriesVisibility(bouquetsHidden) {
     return new Promise((resolve, reject) => {
         db.serialize(() => {

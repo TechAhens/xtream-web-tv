@@ -40,10 +40,19 @@ app.use(session({
 }));
 
 // Cron-Job für Updates
+/**
+ * Schedules a cron job to update the database tables at specified intervals.
+ * The schedule is defined by the cron_update variable.
+ */
 cron.schedule(cron_update, () => {
     dbHandler.updateTables();
 });
 
+/**
+ * Endpoint to manually trigger a database update.
+ * @route GET /update
+ * @returns {Object} JSON response indicating success or failure of the update.
+ */
 app.get('/update', async (req, res) => {
     try {
         await dbHandler.updateTables();
@@ -53,6 +62,10 @@ app.get('/update', async (req, res) => {
     }
 });
 
+/**
+ * Fetches the latest version of the application from GitHub releases.
+ * @returns {string|null} The latest version tag or null if an error occurs.
+ */
 async function getLatestGitHubVersion() {
     try {
         const response = await axios.get(`https://api.github.com/repos/kolle86/xtream-web-tv/releases/latest`);
@@ -64,6 +77,11 @@ async function getLatestGitHubVersion() {
 }
 
 // Startseite mit Account- und Stream-Informationen
+/**
+ * Renders the homepage with account and stream information if the user is logged in.
+ * If not logged in, renders the login page.
+ * @route GET /
+ */
 app.get('/', async (req, res) => {
     const isLoggedIn = req.session.isLoggedIn;
     if (isLoggedIn) {
@@ -88,6 +106,11 @@ app.get('/', async (req, res) => {
     }
 });
 
+/**
+ * Handles user login by verifying credentials.
+ * Sets session isLoggedIn to true if successful.
+ * @route POST /login
+ */
 app.post('/login', async (req, res) => {
     if (req.body.password == password && req.body.username == username) {
         req.session.isLoggedIn = true;
@@ -99,6 +122,10 @@ app.post('/login', async (req, res) => {
 
 });
 
+/**
+ * Updates the visibility of categories based on user input.
+ * @route POST /bouquets
+ */
 app.post('/bouquets', async (req, res) => {
     console.log(req.body);
     try {
@@ -110,6 +137,10 @@ app.post('/bouquets', async (req, res) => {
 
 });
 
+/**
+ * Logs the user out by destroying the session and redirects to the homepage.
+ * @route GET /logout
+ */
 app.get('/logout', (req, res) => {
     req.session.destroy((err) => {
         if (err) {
@@ -121,6 +152,9 @@ app.get('/logout', (req, res) => {
 });
 
 // Server starten
+/**
+ * Starts the server and listens on the specified port.
+ */
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
