@@ -43,9 +43,7 @@
                     <li><h5 class="dropdown-header">
                         v<%= version.appVersion %>
                         <% if (!version.isUpToDate ){ %>
-                            <span class="text-warning">
-                                (update available)
-                            </span>
+                            <span class="badge text-bg-warning">Update available</span>
                         <%}%>
                     </h5>
                     </li>
